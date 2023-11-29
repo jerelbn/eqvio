@@ -1,10 +1,10 @@
 [submodule "external/GIFT"]
 	path = external/GIFT
-	url = git@github.com:pvangoor/GIFT.git
+	url = git@github.com:jerelbn/GIFT.git
 [submodule "external/argparse"]
 	path = external/argparse
 	url = git@github.com:p-ranav/argparse.git
 [submodule "external/LiePP"]
 	path = external/LiePP
-	url = git@github.com:pvangoor/LiePP
+	url = git@github.com:jerelbn/LiePP.git
 	branch = main
