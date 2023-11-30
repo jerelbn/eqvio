@@ -211,14 +211,25 @@ if (EQVIO_BUILD_VISUALISATION)
     message("Building with visualisation support.")
 endif()
 
+catkin_package(
+  CATKIN_DEPENDS roscpp
+)
+
+catkin_package(
+    INCLUDE_DIRS include ${EQVIO_MODULE_INCLUDE_DIRS} ${GIFT_INCLUDE_DIRS} ${LiePP_INCLUDE_DIRS}
+    LIBRARIES ${PROJECT_NAME}
+    CATKIN_DEPENDS roscpp
+    DEPENDS
+)
+
 # Add the EqVIO library
 
-add_library(eqvio_lib
+add_library(${PROJECT_NAME}
     ${EQVIO_SOURCE_FILES}
     ${EQVIO_HEADER_FILES}
 )
 
-target_include_directories(eqvio_lib
+target_include_directories(${PROJECT_NAME}
     PUBLIC include
     PUBLIC ${EQVIO_MODULE_INCLUDE_DIRS}
     PUBLIC ${OPENCV_INCLUDE_DIRS}
@@ -229,22 +240,23 @@ target_include_directories(eqvio_lib
     PUBLIC ${cv_bridge_INCLUDE_DIRS}
 )
 
-target_link_libraries(eqvio_lib
+target_link_libraries(${PROJECT_NAME}
     ${EQVIO_MODULE_LIBS}
     ${OpenCV_LIBS}
     GIFT
     ${rosbag_LIBRARIES}
     ${cv_bridge_LIBRARIES}
+    # ${catkin_LIBRARIES}
 )
 
 if (${CMAKE_COMPILER_IS_GNUCC} AND ${CMAKE_CXX_COMPILER_VERSION} LESS 9.0)
     message("GCC version is less than 9. Manually linking std::filesystem.")
-    target_link_libraries(eqvio_lib stdc++fs)
+    target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
 
 if (${EXTRA_WARNINGS})
     message("Extra warnings are enabled.")
-    target_compile_options(eqvio_lib PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 # Add the tests
@@ -274,7 +286,7 @@ foreach(EXECUTABLE_NAME ${EXECUTABLES_LIST})
         PRIVATE ${argparse_INCLUDE_DIRS}
     )
     target_link_libraries(${EXECUTABLE_NAME}
-        eqvio_lib
+        ${PROJECT_NAME}
         ${EQVIO_MODULE_LIBS}
         ${OpenCV_LIBS}
         yaml-cpp

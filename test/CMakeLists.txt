@@ -16,7 +16,7 @@ target_include_directories(testing_utilities_lib PUBLIC
     ${EIGEN_INCLUDE_DIRS}
 )
 target_link_libraries(testing_utilities_lib
-    eqvio_lib
+    eqvio
 )
 
 set(TESTS_LIST
@@ -45,7 +45,7 @@ foreach(TEST_NAME ${TESTS_LIST})
     )
     target_link_libraries(${TEST_NAME}
         gtest_main
-        eqvio_lib
+        eqvio
         testing_utilities_lib
     )
     target_compile_definitions(${TEST_NAME}
