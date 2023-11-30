@@ -78,7 +78,7 @@ find_package(yaml-cpp REQUIRED)
 
 
 # Add GIFT
-find_package(GIFT QUIET)
+# find_package(GIFT QUIET)
 if (${GIFT_FOUND})
     message("GIFT is being used as an installed package.")
     set(GIFT_INCLUDE_DIRS "GIFT::GIFT")
